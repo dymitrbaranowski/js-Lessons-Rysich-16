@@ -1,5 +1,7 @@
+// const basicLightbox = require('basiclightbox');
+
 import * as basicLightbox from 'basiclightbox';
-// import 'basiclightbox/dist/basiclightbox.min.css';
+import 'basiclightbox/dist/basiclightbox.min.css';
 
 const instruments = [
   {
@@ -70,6 +72,10 @@ const instruments = [
 
 const search = document.querySelector('.js-search');
 const list = document.querySelector('.js-list');
+const favoriteArr = [];
+const basketArr = [];
+const KEY_FAVORITE = 'favorite';
+const KEY_BASKET = 'basket';
 // {
 //     id: 1,
 //     img: 'https://static.dnipro-m.ua/cache/products/4878/catalog_origin_269592.jpg',
@@ -87,9 +93,9 @@ function createMarkup(arr) {
         <img src="${img}" alt="${name}" width="300">
         <h2>${name}</h2>
         <p><a class="js-info" href="#">More information</a></p>
-        <div>
-          <button>Add to favorite</button>
-          <button>Add to basket</button>
+       <div>
+          <button class="js-favorite">Add to favorite</button>
+          <button class="js-basket">Add to basket</button>
         </div>
       </li>
   `
@@ -104,8 +110,7 @@ list.addEventListener('click', onClick);
 function onClick(evt) {
   evt.preventDefault();
   if (evt.target.classList.contains('js-info')) {
-    const { id } = evt.target.closest('.js-card').dataset;
-    const product = findProduct(Number(id));
+    const product = findProduct(evt.target);
     const instance = basicLightbox.create(`
        <div class="modal">
         <img src="${product.img}" alt="${product.name}" width="200" />
@@ -113,17 +118,30 @@ function onClick(evt) {
         <h3>${product.price} grn</h3>
         <p>${product.description}</p>
         <div>
-          <button>Add to favorite</button>
-          <button>Add to basket</button>
+          <button class="js-favorite">Add to favorite</button>
+          <button class="js-basket">Add to basket</button>
         </div>
       </div>
     `);
     instance.show();
   }
+
+  if (evt.target.classList.contains('js-basket')) {
+    const product = findProduct(evt.target);
+    basketArr.push(product);
+    localStorage.setItem(KEY_BASKET, JSON.stringify(basketArr));
+  }
+
+  if (evt.target.classList.contains('js-favorite')) {
+    const product = findProduct(evt.target);
+    favoriteArr.push(product);
+    localStorage.setItem(KEY_FAVORITE, JSON.stringify(favoriteArr));
+  }
 }
 
 createMarkup(instruments);
 
-function findProduct(productId) {
+function findProduct(elem) {
+  const productId = Number(elem.closest('.js-card').dataset.id);
   return instruments.find(({ id }) => id === productId);
 }
