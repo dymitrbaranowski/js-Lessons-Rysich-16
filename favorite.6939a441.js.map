@@ -1,0 +1,1 @@
+{"mappings":"AAAA,IAAMA,KAAOC,SAASC,cAAc,YAC9BC,SAAWC,aAAaC,QAAQ","sources":["src/favorite.js"],"sourcesContent":["const list = document.querySelector('.js-list');\nconst favorite = localStorage.getItem('.');\n"],"names":["list","document","querySelector","favorite","localStorage","getItem"],"version":3,"file":"favorite.6939a441.js.map"}
