@@ -1,7 +1,10 @@
-// const basicLightbox = require('basiclightbox');
+const basicLightbox = require('basiclightbox');
 
 import * as basicLightbox from 'basiclightbox';
-// import 'basiclightbox/dist/basiclightbox.min.css';
+import { createMarkup } from './helpers/createMarkup';
+import 'basiclightbox/dist/basiclightbox.min.css';
+
+import { common } from './common';
 
 const instruments = [
   {
@@ -70,12 +73,10 @@ const instruments = [
   },
 ];
 
-const KEY_FAVORITE = 'favorite';
-const KEY_BASKET = 'basket';
 const search = document.querySelector('.js-search');
 const list = document.querySelector('.js-list');
-const favoriteArr = JSON.parse(localStorage.getItem('KEY_FAVORITE')) ?? [];
-const basketArr = JSON.parse(localStorage.getItem('KEY_BASKET')) ?? [];
+const favoriteArr = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
+const basketArr = JSON.parse(localStorage.getItem(common.KEY_BASKET)) ?? [];
 
 // {
 //     id: 1,
@@ -85,27 +86,7 @@ const basketArr = JSON.parse(localStorage.getItem('KEY_BASKET')) ?? [];
 //     description:
 //       'Мережевий дриль-шуруповерт TD-30 — надійний помічник для робіт по дому та в невеликій майстерні, якщо необхідно виконувати роботу переважно з закручування кріпильних елементів. Муфта регулювання крутного моменту робить інструмент універсальним вибором як для свердління, так і для роботи з кріпленнями.',
 //   },
-
-function createMarkup(arr) {
-  const markup = arr
-    .map(
-      ({ id, img, name }) => `
-     <li data-id="${id}" class="js-card">
-        <img src="${img}" alt="${name}" width="300">
-        <h2>${name}</h2>
-        <p><a class="js-info" href="#">More information</a></p>
-       <div>
-          <button class="js-favorite">Add to favorite</button>
-          <button class="js-basket">Add to basket</button>
-        </div>
-      </li>
-  `
-    )
-    .join('');
-
-  list.innerHTML = markup;
-}
-
+createMarkup(instruments, list);
 list.addEventListener('click', onClick);
 
 function onClick(evt) {
@@ -131,7 +112,7 @@ function onClick(evt) {
     const product = findProduct(evt.target);
 
     basketArr.push(product);
-    localStorage.setItem(KEY_BASKET, JSON.stringify(basketArr));
+    localStorage.setItem(common.KEY_BASKET, JSON.stringify(basketArr));
   }
 
   if (evt.target.classList.contains('js-favorite')) {
@@ -141,11 +122,9 @@ function onClick(evt) {
       return;
     }
     favoriteArr.push(product);
-    localStorage.setItem(KEY_FAVORITE, JSON.stringify(favoriteArr));
+    localStorage.setItem(common.KEY_FAVORITE, JSON.stringify(favoriteArr));
   }
 }
-
-createMarkup(instruments);
 
 function findProduct(elem) {
   const productId = Number(elem.closest('.js-card').dataset.id);

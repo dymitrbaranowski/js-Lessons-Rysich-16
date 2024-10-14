@@ -2,3 +2,12 @@
   width: 600px;
   background-color: white;
 }
+
+ul {
+  list-style: none;
+}
+
+.close {
+  position: absolute;
+  margin-left: 40%;
+}
