@@ -116,9 +116,6 @@ function onClick(evt) {
     localStorage.setItem(common.KEY_BASKET, JSON.stringify(basketArr));
   }
 
-  // const favoriteArr = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
-  // const basketArr = JSON.parse(localStorage.getItem(common.KEY_BASKET)) ?? [];
-
   if (evt.target.classList.contains('js-favorite')) {
     const product = findProduct(evt.target);
     const inStorage = favoriteArr.some(({ id }) => id === product.id);
@@ -129,20 +126,16 @@ function onClick(evt) {
     localStorage.setItem(common.KEY_FAVORITE, JSON.stringify(favoriteArr));
   }
 
-  if (evt.target.classList.contains('js-close')) {
-    const product = findProduct(evt.target);
-    console.log(product);
+  // if (evt.target.classList.contains('js-close')) {
+  //   const product = findProduct(evt.target);
+  //   // console.log(product);
+  //   let id = product.id;
+  //   let itemIndex = favoriteArr.findIndex(item => +item.id === +id); // Шукаємо індекс елемента в списку
+  //   if (itemIndex === -1) return;
+  //   favoriteArr.splice(itemIndex, 1); // Видаляємо зі списку
 
-    let filteredFavoriteArr = favoriteArr.filter(
-      item => item.id !== product.id
-    );
-    console.log(filteredFavoriteArr);
-
-    localStorage.setItem(
-      common.KEY_FAVORITE,
-      JSON.stringify(filteredFavoriteArr)
-    );
-  }
+  //   localStorage.setItem(common.KEY_FAVORITE, JSON.stringify(favoriteArr));
+  // }
 }
 
 function findProduct(elem) {
