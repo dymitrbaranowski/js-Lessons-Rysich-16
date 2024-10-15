@@ -1,5 +1,6 @@
 import { common } from './common';
 import { createMarkup } from './helpers/createMarkup';
+import { createModal } from './helpers/createModal';
 
 const favoriteArr = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
 const basketArr = JSON.parse(localStorage.getItem(common.KEY_BASKET)) ?? [];
@@ -9,6 +10,12 @@ const favorite = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
 list.addEventListener('click', onClick);
 
 function onClick(evt) {
+  evt.preventDefault();
+  if (evt.target.classList.contains('js-info')) {
+    const product = findProduct(evt.target);
+    createModal(product);
+  }
+
   if (evt.target.classList.contains('js-close')) {
     const product = findProduct(evt.target);
     let id = product.id;
