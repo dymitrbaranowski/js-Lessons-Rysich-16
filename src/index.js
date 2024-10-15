@@ -91,6 +91,7 @@ list.addEventListener('click', onClick);
 
 function onClick(evt) {
   evt.preventDefault();
+  // console.log(evt.target);
   if (evt.target.classList.contains('js-info')) {
     const product = findProduct(evt.target);
     const instance = basicLightbox.create(`
@@ -115,6 +116,9 @@ function onClick(evt) {
     localStorage.setItem(common.KEY_BASKET, JSON.stringify(basketArr));
   }
 
+  // const favoriteArr = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
+  // const basketArr = JSON.parse(localStorage.getItem(common.KEY_BASKET)) ?? [];
+
   if (evt.target.classList.contains('js-favorite')) {
     const product = findProduct(evt.target);
     const inStorage = favoriteArr.some(({ id }) => id === product.id);
@@ -123,6 +127,21 @@ function onClick(evt) {
     }
     favoriteArr.push(product);
     localStorage.setItem(common.KEY_FAVORITE, JSON.stringify(favoriteArr));
+  }
+
+  if (evt.target.classList.contains('js-close')) {
+    const product = findProduct(evt.target);
+    console.log(product);
+
+    let filteredFavoriteArr = favoriteArr.filter(
+      item => item.id !== product.id
+    );
+    console.log(filteredFavoriteArr);
+
+    localStorage.setItem(
+      common.KEY_FAVORITE,
+      JSON.stringify(filteredFavoriteArr)
+    );
   }
 }
 

@@ -3,12 +3,12 @@ import { createMarkup } from './helpers/createMarkup';
 
 const list = document.querySelector('.js-list');
 console.log(list);
-const close = document.querySelector('.js-close');
-console.log(close);
 
-const favorite = JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
+const favorite = function () {
+  return JSON.parse(localStorage.getItem(common.KEY_FAVORITE)) ?? [];
+};
 
-createMarkup(favorite, list);
+createMarkup(favorite(), list);
 
 // close.addEventListener('click', onClickClose);
 

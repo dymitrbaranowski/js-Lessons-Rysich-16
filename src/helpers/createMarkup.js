@@ -3,7 +3,7 @@ function createMarkup(arr, list) {
     .map(
       ({ id, img, name }) => `
        <li data-id="${id}" class="js-card">
-      <button class="close js-close">X</button>
+          <button class="close js-close">X</button>
        
           <img src="${img}" alt="${name}" width="300">
           <h2>${name}</h2>
